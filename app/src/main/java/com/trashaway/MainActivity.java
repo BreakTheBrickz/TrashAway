@@ -22,5 +22,5 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //Das ist ein Kommentar2
+    //Mein Name David
 }
