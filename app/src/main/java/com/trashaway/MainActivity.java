@@ -21,4 +21,6 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
     }
+
+    //Das ist ein Kommentar
 }
