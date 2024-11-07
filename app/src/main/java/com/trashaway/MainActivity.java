@@ -1,5 +1,6 @@
 package com.trashaway;
 
+
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
