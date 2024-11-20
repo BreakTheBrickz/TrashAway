@@ -1,4 +1,4 @@
-/*package com.trashaway;
+package com.trashaway;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,4 +12,3 @@ public class TrashABC extends AppCompatActivity {
     }
 }
 
- */

@@ -8,14 +8,15 @@
     tools:context=".MainActivity">
 
 
-    <!-- <Button
+     <Button
         android:id="@+id/openTrashABCButton"
         android:layout_width="123dp"
-        android:layout_height="46dp"
+        android:layout_height="100dp"
         android:text="TrashABC"
         tools:layout_editor_absoluteX="287dp"
-        tools:layout_editor_absoluteY="683dp" />
+        tools:layout_editor_absoluteY="683dp"
+         tools:ignore="MissingConstraints" />
 
-        -->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

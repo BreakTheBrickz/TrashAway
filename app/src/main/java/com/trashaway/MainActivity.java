@@ -26,16 +26,16 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        /*Button openTrashABCButton = findViewById(R.id.openTrashABCButton);
+        Button openTrashABCButton = findViewById(R.id.openTrashABCButton);
         openTrashABCButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this, TrashABC.class);
                 startActivity(intent);
             }
-        }
+        });
 
-         */
+
     }
 
     //Mein Name Sebi
