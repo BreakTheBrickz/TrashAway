@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
 import android.content.Intent;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,13 +21,13 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    private static GoogleMap mMap;
     private ActivityMapsBinding binding;
 
     private static final int ADD_LOCATION_REQUEST = 1;
 
     //List for saving locations (Scherer)
-    private List<Location> locations;
+    private static List<Location> locations;
 
 
     //Advanced class for location information (Scherer)
@@ -83,20 +84,20 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-        // Update map with current locations (Scherer)
-        private void updateMap() {
-            if (mMap == null) return;
+    // Update map with current locations (Scherer)
+    public static void updateMap() {
+        if (mMap == null) return;
 
-            mMap.clear();
-            for (Location location : locations) {
-                LatLng latLng = new LatLng(location.latitude, location.longitude);
-                mMap.addMarker(new MarkerOptions()
-                        .position(latLng)
-                        .title(location.name)
-                        .snippet(location.type)
-                        .icon(BitmapDescriptorFactory.fromResource(location.iconResId)));
-            }
+        mMap.clear();
+        for (Location location : locations) {
+            LatLng latLng = new LatLng(location.latitude, location.longitude);
+            mMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title(location.name)
+                    .snippet(location.type)
+                    .icon(BitmapDescriptorFactory.fromResource(location.iconResId)));
         }
+    }
 
     // Process return from AddLocation (Scherer)
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -125,5 +126,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             case "black_icon": return R.drawable.black_icon;
             default: return R.drawable.throw_away_icon; // Default, in case of no selection
         }
+    }
+
+    public void addLocationPressed(View view){
+        Intent newIntent = new Intent(MainActivity.this, AddLocation.class);
+        MainActivity.this.startActivity(newIntent);
     }
 }
