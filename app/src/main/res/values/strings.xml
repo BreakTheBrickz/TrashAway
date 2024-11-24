@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">TrashAway</string>
     <string name="title_activity_maps">MapsActivity</string>
+
+    // Icons selection for location (Scherer)
+    <string-array name="icon_choices">
+        <item>yellow_icon</item>
+        <item>blue_icon</item>
+        <item>black_icon</item>
+    </string-array>
 </resources>
