@@ -5,59 +5,86 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CheckLocation">
+    tools:context=".CheckLocation"
+    android:padding="16dp"
+    android:background="#FAFAFA">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
+    <!-- Name of location -->
+    <TextView
+        android:id="@+id/location_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Standort Name"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
         android:gravity="center"
-        android:background="#FAFAFA">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="12dp" />
 
-        <!-- name of location -->
-        <TextView
-            android:id="@+id/location_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Standort Name"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textColor="#333333"
-            android:layout_marginBottom="12dp" />
+    <!-- Coordinates -->
+    <TextView
+        android:id="@+id/location_coordinates"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Koordinaten: 47.1234, 10.1234"
+        android:textSize="16sp"
+        android:textColor="#666666"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/location_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="4dp" />
 
-        <!-- coordinates -->
-        <TextView
-            android:id="@+id/location_coordinates"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Koordinaten: 47.1234, 10.1234"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:textColor="#666666"
-            android:layout_marginBottom="4dp" />
+    <!-- Type -->
+    <TextView
+        android:id="@+id/location_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Typ: Benutzerdefiniert"
+        android:textSize="16sp"
+        android:textColor="#666666"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/location_coordinates"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp" />
 
-        <!-- Type -->
-        <TextView
-            android:id="@+id/location_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Typ: Benutzerdefiniert"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:textColor="#666666"
-            android:layout_marginBottom="16dp" />
+    <!-- Icon -->
+    <ImageView
+        android:id="@+id/location_icon"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerInside"
+        app:layout_constraintTop_toBottomOf="@id/location_type"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Icon -->
-        <ImageView
-            android:id="@+id/location_icon"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="16dp"
-            android:scaleType="centerInside" />
+    <!-- Status -->
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Überprüfung läuft..."
+        android:textSize="18sp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/location_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp" />
 
-    </LinearLayout>
+    <!-- Button -->
+    <Button
+        android:id="@+id/btn_throw_away"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Müll entsorgen"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tv_status"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

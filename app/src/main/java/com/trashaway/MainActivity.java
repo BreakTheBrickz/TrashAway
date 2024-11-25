@@ -69,15 +69,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         locations.add(new Location("Trashbin Dave", 47.7245, 10.3146, "Weizenabfall", R.drawable.yellow_icon));
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -121,6 +112,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
                         int iconResId = getIconResource(icon_id);
                         locations.add(new Location(name, latitude, longitude, type, iconResId));
+                        moveCameraToLocation(latitude,longitude);
                         updateMap();
                     }
                 }
@@ -142,6 +134,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    // Move camera to newest location
+    private void moveCameraToLocation(double latitude, double longitude){
+        LatLng newLocation = new LatLng(latitude, longitude);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newLocation,15));
+    }
+
     // Function to select type based on name (Scherer)
     private String getTypeResource(String type) {
         switch (type) {
@@ -158,7 +156,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             case "yellow_icon": return R.drawable.yellow_icon;
             case "blue_icon": return R.drawable.blue_icon;
             case "black_icon": return R.drawable.black_icon;
-            default: return R.drawable.throw_away_icon; // Default, in case of no selection
+            default: return R.drawable.profile_icon; // Default, in case of no selection
         }
     }
 
