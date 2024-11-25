@@ -16,6 +16,9 @@
         android:theme="@style/Theme.TrashAway"
         tools:targetApi="31">
         <activity
+            android:name=".CheckLocation"
+            android:exported="false" />
+        <activity
             android:name=".AddLocation"
             android:exported="false" />
         <!--

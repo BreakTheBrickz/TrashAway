@@ -23,7 +23,7 @@ import android.widget.Toast;
 public class AddLocation extends AppCompatActivity {
 
     private EditText et_name, et_latitude, et_longitude;
-    private Spinner sp_icon;
+    private Spinner sp_type, sp_icon;
     private Button btn_save;
 
     @Override
@@ -35,14 +35,21 @@ public class AddLocation extends AppCompatActivity {
         et_name = findViewById(R.id.et_name);
         et_latitude = findViewById(R.id.et_latitude);
         et_longitude = findViewById(R.id.et_longitude);
+        sp_type = findViewById(R.id.spinner_type);
         sp_icon = findViewById(R.id.spinner_icon);
         btn_save = findViewById(R.id.btn_save);
 
+        // Load types in spinner
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
+                R.array.type_choices, android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_type.setAdapter(adapter1);
+
         // Load icons in spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
                 R.array.icon_choices, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp_icon.setAdapter(adapter);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_icon.setAdapter(adapter2);
 
         // Button-Listener
         btn_save.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +58,7 @@ public class AddLocation extends AppCompatActivity {
                 String name = et_name.getText().toString();
                 String latitudeStr = et_latitude.getText().toString();
                 String longitudeStr = et_longitude.getText().toString();
+                String typeChoice = sp_type.getSelectedItem().toString();
                 String iconChoice = sp_icon.getSelectedItem().toString();
 
                 if (name.isEmpty() || latitudeStr.isEmpty() || longitudeStr.isEmpty()) {
@@ -63,6 +71,7 @@ public class AddLocation extends AppCompatActivity {
                 resultIntent.putExtra("name", name);
                 resultIntent.putExtra("latitude", Double.parseDouble(latitudeStr));
                 resultIntent.putExtra("longitude", Double.parseDouble(longitudeStr));
+                resultIntent.putExtra("type", typeChoice);
                 resultIntent.putExtra("icon", iconChoice);
                 setResult(Activity.RESULT_OK, resultIntent);
                 finish();

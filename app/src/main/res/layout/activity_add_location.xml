@@ -2,47 +2,110 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FAFAFA"
     tools:context=".AddLocation">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+    <!-- Title TextView -->
+    <TextView
+        android:id="@+id/tv_add_location_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Neuen Standort hinzufügen"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="64dp" />
 
+    <!-- Input fields and dropdowns -->
+    <LinearLayout
+        android:id="@+id/ll_inputs"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_add_location_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_save"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
+
+        <!-- Standortname -->
         <EditText
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name des Standorts" />
+            android:hint="Name des Standorts"
+            android:backgroundTint="#CCCCCC"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"
+            android:textColor="#333333"
+            android:textColorHint="#888888" />
 
+        <!-- Breitengrad -->
         <EditText
             android:id="@+id/et_latitude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Breitengrad"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:backgroundTint="#CCCCCC"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"
+            android:textColor="#333333"
+            android:textColorHint="#888888" />
 
+        <!-- Längengrad -->
         <EditText
             android:id="@+id/et_longitude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Längengrad"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:backgroundTint="#CCCCCC"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"
+            android:textColor="#333333"
+            android:textColorHint="#888888" />
 
+        <!-- Typ-Auswahl -->
+        <Spinner
+            android:id="@+id/spinner_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#333333"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Icon-Auswahl -->
         <Spinner
             android:id="@+id/spinner_icon"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Standort hinzufügen" />
+            android:backgroundTint="#333333"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp" />
+
     </LinearLayout>
+
+    <!-- Speichern-Button -->
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Standort hinzufügen"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="64dp"
+        android:padding="12dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

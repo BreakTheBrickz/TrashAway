@@ -1,9 +1,12 @@
 package com.trashaway;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -11,27 +14,29 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.trashaway.databinding.ActivityMapsBinding;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private static GoogleMap mMap;
+    private GoogleMap mMap;
     private ActivityMapsBinding binding;
 
     private static final int ADD_LOCATION_REQUEST = 1;
 
     //List for saving locations (Scherer)
-    private static List<Location> locations;
+    private List<Location> locations;
 
 
     //Advanced class for location information (Scherer)
-    static class Location {
+    static class Location implements Serializable {
         String name;
         double latitude;
         double longitude;
@@ -78,14 +83,52 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         updateMap();
 
-        //Add locations as marker on map (Scherer)
-        for (Location location : locations) {
-            LatLng latLng = new LatLng(location.latitude, location.longitude);
-        }
+        mMap.setOnMarkerClickListener(marker -> { // (Scherer)
+            // Extract data from the marker
+            String name = marker.getTitle();
+            double latitude = marker.getPosition().latitude;
+            double longitude = marker.getPosition().longitude;
+
+            Location selectedLocation = findLocationByMarker(marker);
+            String type = selectedLocation.type;
+            int iconResId = selectedLocation.iconResId;
+
+            // Pass data to the CheckLocation activity (Scherer)
+            Intent intent = new Intent(MainActivity.this, CheckLocation.class);
+            intent.putExtra("name", name);
+            intent.putExtra("latitude", latitude);
+            intent.putExtra("longitude", longitude);
+            intent.putExtra("type", type);
+            intent.putExtra("icon", iconResId);
+            startActivity(intent);
+
+            return true; // Marks that the click has been processed
+        });
     }
 
+    // Process return from AddLocation (Scherer)
+    private ActivityResultLauncher<Intent> addLocationLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        String name = data.getStringExtra("name");
+                        double latitude = data.getDoubleExtra("latitude", 0);
+                        double longitude = data.getDoubleExtra("longitude", 0);
+                        String type = data.getStringExtra("type");
+                        String icon_id = data.getStringExtra("icon");
+
+                        int iconResId = getIconResource(icon_id);
+                        locations.add(new Location(name, latitude, longitude, type, iconResId));
+                        updateMap();
+                    }
+                }
+            }
+    );
+
     // Update map with current locations (Scherer)
-    public static void updateMap() {
+    private void updateMap() {
         if (mMap == null) return;
 
         mMap.clear();
@@ -99,22 +142,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    // Process return from AddLocation (Scherer)
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == ADD_LOCATION_REQUEST && resultCode == RESULT_OK) {
-            String name = data.getStringExtra("name");
-            double latitude = data.getDoubleExtra("latitude", 0);
-            double longitude = data.getDoubleExtra("longitude", 0);
-            String icon_id = data.getStringExtra("icon");
-
-            // Select icon
-            int iconResId = getIconResource(icon_id);
-
-            // Add new location and update map
-            locations.add(new Location(name, latitude, longitude, "Benutzerdefiniert", iconResId));
-            updateMap();
+    // Function to select type based on name (Scherer)
+    private String getTypeResource(String type) {
+        switch (type) {
+            case "Mülleimer": return "Mülleimer";
+            case "Wertstoffhof": return "Wertstoffhof";
+            case "Müllinsel": return "Müllinsel";
+            default: return "Keine Angabe"; // Default, in case of no selection
         }
     }
 
@@ -128,8 +162,34 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    public void addLocationPressed(View view){
-        Intent newIntent = new Intent(MainActivity.this, AddLocation.class);
-        MainActivity.this.startActivity(newIntent);
+    // Safe locations list (Scherer)
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("locations", new ArrayList<>(locations));
     }
+    // Restore locations list (Scherer)
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            locations = (List<Location>) savedInstanceState.getSerializable("locations");
+            updateMap();
+        }
+    }
+
+    private Location findLocationByMarker(Marker marker) {
+        for (Location location : locations) {
+            if (marker.getTitle() != null && marker.getTitle().equals(location.name)) {
+                return location;
+            }
+        }
+        return null;
+    }
+
+    public void addLocationPressed(View view){ // (Scherer)
+        Intent newIntent = new Intent(MainActivity.this, AddLocation.class);
+        addLocationLauncher.launch(newIntent);
+    }
+
 }

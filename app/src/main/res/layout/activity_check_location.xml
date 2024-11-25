@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CheckLocation">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center"
+        android:background="#FAFAFA">
+
+        <!-- Name des Standorts -->
+        <TextView
+            android:id="@+id/location_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Standort Name"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#333333"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Koordinaten -->
+        <TextView
+            android:id="@+id/location_coordinates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Koordinaten: 47.1234, 10.1234"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#666666"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Typ -->
+        <TextView
+            android:id="@+id/location_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Typ: Benutzerdefiniert"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#666666"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Großes Icon -->
+        <ImageView
+            android:id="@+id/location_icon"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerInside" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

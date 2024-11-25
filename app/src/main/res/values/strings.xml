@@ -2,6 +2,13 @@
     <string name="app_name">TrashAway</string>
     <string name="title_activity_maps">MapsActivity</string>
 
+    // Type selection for location (Scherer)
+    <string-array name="type_choices">
+        <item>Mülleimer</item>
+        <item>Wertstoffhof</item>
+        <item>Müllinsel</item>
+    </string-array>
+
     // Icons selection for location (Scherer)
     <string-array name="icon_choices">
         <item>yellow_icon</item>
