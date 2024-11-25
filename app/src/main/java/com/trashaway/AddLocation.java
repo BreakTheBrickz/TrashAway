@@ -62,7 +62,7 @@ public class AddLocation extends AppCompatActivity {
                 String iconChoice = sp_icon.getSelectedItem().toString();
 
                 if (name.isEmpty() || latitudeStr.isEmpty() || longitudeStr.isEmpty()) {
-                    Toast.makeText(AddLocation.this, "Bitte alle Felder ausfüllen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddLocation.this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

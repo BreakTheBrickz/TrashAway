@@ -16,7 +16,7 @@
         android:gravity="center"
         android:background="#FAFAFA">
 
-        <!-- Name des Standorts -->
+        <!-- name of location -->
         <TextView
             android:id="@+id/location_name"
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:textColor="#333333"
             android:layout_marginBottom="12dp" />
 
-        <!-- Koordinaten -->
+        <!-- coordinates -->
         <TextView
             android:id="@+id/location_coordinates"
             android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             android:textColor="#666666"
             android:layout_marginBottom="4dp" />
 
-        <!-- Typ -->
+        <!-- Type -->
         <TextView
             android:id="@+id/location_type"
             android:layout_width="match_parent"
@@ -50,7 +50,7 @@
             android:textColor="#666666"
             android:layout_marginBottom="16dp" />
 
-        <!-- Großes Icon -->
+        <!-- Icon -->
         <ImageView
             android:id="@+id/location_icon"
             android:layout_width="150dp"
