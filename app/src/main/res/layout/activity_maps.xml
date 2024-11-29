@@ -17,6 +17,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
+    <!-- Add location button -->
     <Button
         android:id="@+id/location_add_btn"
         android:layout_width="48dp"

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -29,7 +30,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
 
-    private static final int ADD_LOCATION_REQUEST = 1;
+    private TextView tv_score;
+    private int score = 0;
 
     //List for saving locations (Scherer)
     private List<Location> locations;

@@ -3,6 +3,8 @@
 package com.trashaway;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -47,12 +49,12 @@ public class CheckLocation extends AppCompatActivity {
         targetLatitude = getIntent().getDoubleExtra("latitude",0.0);
         targetLongitude = getIntent().getDoubleExtra("longitude",0.0);
 
-        // Button zunächst unsichtbar
+        // Button initially invisible
         btn_throw_away.setVisibility(View.GONE);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        // Standortberechtigung prüfen
+        // Check location permission
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -60,6 +62,17 @@ public class CheckLocation extends AppCompatActivity {
         } else {
             checkProximityToTarget(targetLatitude, targetLongitude, btn_throw_away);
         }
+
+        // Button-Listener for btn_throw_away
+        btn_throw_away.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Return the score to MainActivity and close the activity
+                Intent resultIntent = new Intent();
+                setResult(Activity.RESULT_OK, resultIntent); // Successful answer
+                finish(); // Close activity
+            }
+        });
 
         // Get the passed data
         String name = getIntent().getStringExtra("name");
@@ -82,7 +95,7 @@ public class CheckLocation extends AppCompatActivity {
     }
 
     private void checkProximityToTarget(double targetLatitude, double targetLongitude, Button btn_throw_away) {
-        // Aktuellen Standort abrufen
+        // Get current location
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -97,11 +110,11 @@ public class CheckLocation extends AppCompatActivity {
                     double currentLatitude = location.getLatitude();
                     double currentLongitude = location.getLongitude();
 
-                    // Entfernung berechnen
+                    // Calculate distance
                     float distance = calculateDistance(currentLatitude, currentLongitude,
                             targetLatitude, targetLongitude);
 
-                    // Überprüfung der Entfernung
+                    // Distance verification
                     if (distance <= NEARBY_RADIUS) {
                         tv_status.setText("Du bist in der Nähe des Standorts!");
                         btn_throw_away.setVisibility(View.VISIBLE);
@@ -117,7 +130,7 @@ public class CheckLocation extends AppCompatActivity {
         });
     }
 
-    // Berechnung der Entfernung zwischen zwei Koordinaten (in Metern)
+    // Calculating the distance between two coordinates (in meters)
     private float calculateDistance(double lat1, double lon1, double lat2, double lon2) {
         float[] result = new float[1];
         Location.distanceBetween(lat1, lon1, lat2, lon2, result);
