@@ -32,6 +32,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import data.ApiService;
+import data.LocationData;
+import data.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class AddLocation extends AppCompatActivity {
 
     private EditText et_name;
@@ -42,12 +49,16 @@ public class AddLocation extends AppCompatActivity {
     private double currentLatitude = 0.0;
     private double currentLongitude = 0.0;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
+    ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_location);
+
+        //creates new RetrofitClient instance
+        apiService = RetrofitClient.getApiService();
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -102,10 +113,37 @@ public class AddLocation extends AppCompatActivity {
                 resultIntent.putExtra("type", typeChoice);
                 resultIntent.putExtra("icon", iconChoice);
                 setResult(Activity.RESULT_OK, resultIntent);
+
+                LocationData locationDataPackage = new LocationData(name,Double.parseDouble(latitudeStr),Double.parseDouble(longitudeStr),iconChoice);
+                createLocationUpdate(locationDataPackage);
+
                 finish();
             }
         });
     }
+
+
+    public void createLocationUpdate(LocationData locationDataPackage){
+
+        apiService.addLocation(locationDataPackage).enqueue(new retrofit2.Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, retrofit2.Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Location added successfully!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Error adding location", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Failed to connect to server", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
     private void getCurrentLocation() { // (Scherer)
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED &&
