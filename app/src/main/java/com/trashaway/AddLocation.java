@@ -2,6 +2,8 @@
 
 package com.trashaway;
 
+import static data.HTTPRequest.sendRequest;
+
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -32,8 +34,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import data.ApiService;
+import data.HTTPRequest;
 import data.LocationData;
+import data.Pair;
 import data.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -57,8 +64,7 @@ public class AddLocation extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_location);
 
-        //creates new RetrofitClient instance
-        apiService = RetrofitClient.getApiService();
+
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -114,8 +120,7 @@ public class AddLocation extends AppCompatActivity {
                 resultIntent.putExtra("icon", iconChoice);
                 setResult(Activity.RESULT_OK, resultIntent);
 
-                LocationData locationDataPackage = new LocationData(name,Double.parseDouble(latitudeStr),Double.parseDouble(longitudeStr),iconChoice);
-                createLocationUpdate(locationDataPackage);
+                sendDataToServer(name,currentLatitude,currentLongitude,iconChoice);
 
                 finish();
             }
@@ -123,25 +128,20 @@ public class AddLocation extends AppCompatActivity {
     }
 
 
-    public void createLocationUpdate(LocationData locationDataPackage){
+   public void sendDataToServer(String name, double lat, double lon, String icon){
 
-        apiService.addLocation(locationDataPackage).enqueue(new retrofit2.Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, retrofit2.Response<Void> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Location added successfully!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Error adding location", Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Failed to connect to server", Toast.LENGTH_SHORT).show();
-            }
-        });
+       List<Pair<String, String>> formData = List.of(
+               new Pair<>("name", name),
+               new Pair<>("latitude", String.valueOf(lat)),
+               new Pair<>("longitude", String.valueOf(lon)),
+               new Pair<>("icon_description",icon)
+       );
 
-    }
+
+       String response = sendRequest(HTTPRequest.createPostRequest("add_location.php", List.of(),formData).build());
+
+   }
 
 
     private void getCurrentLocation() { // (Scherer)
