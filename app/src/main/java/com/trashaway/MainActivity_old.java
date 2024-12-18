@@ -39,24 +39,4 @@ public class MainActivity_old extends AppCompatActivity {
 
     //Mein Name Sebi
 
-    /*-----------------------Stefan&Marcel-----------------------
-    //Variables
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    Toolbar toolbar;
-
-    //Hooks
-    DrawerLayout = findViewById(R.id.drawer_Layout);
-    NavigationView = findViewById(R.id.nav_view);
-    toolbar = findViewById(R.id.toolbar);
-
-    //Tool Bar
-    setSupportActionBar(toolbar);
-
-    //Navigation Drawer Menu
-    ActionbarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
-    drawerLayout.addDrawerListener(toggle);
-    toggle.syncState();
-     */
-
 }

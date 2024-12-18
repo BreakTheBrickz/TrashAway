@@ -192,4 +192,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         addLocationLauncher.launch(newIntent);
     }
 
+    //Start Main Menu (Witzigmann)
+    public void menuPressed(View v){
+        //Launch Menu
+        Intent i = new Intent(this, MainMenu.class);
+        startActivity(i);
+    }
+
 }
