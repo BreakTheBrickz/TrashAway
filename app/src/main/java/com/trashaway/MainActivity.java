@@ -1,14 +1,23 @@
 package com.trashaway;
 
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -16,6 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.trashaway.databinding.ActivityMapsBinding;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
@@ -25,6 +35,7 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
 
@@ -33,6 +44,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     //List for saving locations (Scherer)
     private List<Location> locations;
+    private FusedLocationProviderClient fusedLocationClient;
+    private double currentLatitude = 0.0;
+    private double currentLongitude = 0.0;
 
 
     //Advanced class for location information (Scherer)
@@ -62,16 +76,42 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+
         mapFragment.getMapAsync(this);
 
         //Add locations (with name, coordinates, type, icon) (Scherer)
         locations = new ArrayList<>();
         locations.add(new Location("Trashbin Dave", 47.7245, 10.3146, "Weizenabfall", R.drawable.yellow_icon));
+        locations.add(new Location("Mülleimer an der Hochschule",47.715887,10.313561,"Restmüll",R.drawable.blue_icon));
+        locations.add(new Location("Christophs Biotonne",47.718511,10.318771,"Biomüll",R.drawable.black_icon));
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+                // Check location permission (Scherer)
+
+        checkForPermission();
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<android.location.Location>() { // (Scherer)
+            @Override
+            public void onSuccess(android.location.Location location) {
+                if (location != null) {
+                    currentLatitude = location.getLatitude();
+                    currentLongitude = location.getLongitude();
+                    moveCameraToLocation(currentLatitude,currentLongitude);
+
+                } else {
+                    // Default in case of no location
+                    Toast.makeText(MainActivity.this,
+                            "Standort konnte nicht abgerufen werden. Bitte Standortdienste aktivieren.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         updateMap();
 
         mMap.setOnMarkerClickListener(marker -> { // (Scherer)
@@ -137,7 +177,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     // Move camera to newest location
     private void moveCameraToLocation(double latitude, double longitude){
         LatLng newLocation = new LatLng(latitude, longitude);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newLocation,15));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newLocation,17));
     }
 
     // Function to select type based on name (Scherer)
@@ -197,4 +237,46 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         startActivity(i);
     }
 
+    private void checkForPermission(){
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+
+        } else {
+                enableLiveLocation();
+        }
+
+    }
+
+    private void enableLiveLocation(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+    }
+
+    public void onCenterLocation(View view){
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        enableLiveLocation();
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<android.location.Location>() { // (Scherer)
+            @Override
+            public void onSuccess(android.location.Location location) {
+                if (location != null) {
+                    currentLatitude = location.getLatitude();
+                    currentLongitude = location.getLongitude();
+                    moveCameraToLocation(currentLatitude, currentLongitude);
+
+                }
+
+            }
+
+        });
+
+    }
 }
