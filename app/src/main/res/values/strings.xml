@@ -14,5 +14,60 @@
         <item>yellow_icon</item>
         <item>blue_icon</item>
         <item>black_icon</item>
+
+
+        <!-- List Restmüll (Reichart) -->
     </string-array>
+    <string name="dos_list_restmuell">
+        • Abgetragene Kleidung und Lumpen, Putzlappen&#10; • Asche, Kehricht, Zigarettenkippen&#10; • Kassenbons&#10; • Kinderspielzeug&#10; • Kleintierstreu&#10; • Klobürsten&#10; • Knochen&#10;• Kugelschreiber&#10; • Leder und Gummiabfälle&#10;
+•	Medizinische Abfälle, wie Altmedikamente, Spritzen, Kanülen in stichfesten Behältern, Verbände, lnfusionsbeutel und -bestecke&#10;
+•	Papiertaschentücher&#10;
+•	Verpackungen (stark verschmutzt)&#10;
+•	Staubsaugerbeutel&#10;
+•	Windeln, Damenbinden und Tampons&#10;
+•	Zahnbürsten&#10;
+</string>
+    <string name="donts_list_restmuell">
+        • Akkus&#10; • Batterien&#10; • Elektrogeräte (wie Handy, Rasierapparat, Bügeleisen)&#10; • Lebensmittel(-abfälle)&#10;• Steine&#10;• Ziegel</string>
+
+
+    <!-- List Altkleider und Schuhe (Reichart) -->
+
+    <string name="dos_list_altkleider_und_schuhe">
+         • Bett-, Tisch- und Haushaltswäsche (gut erhalten)&#10;
+        • Damen-, Herren- und Kinderkleidung&#10; • Faschingskleidung&#10; • Handtaschen und Accessoires&#10; • Retrokleidung&#10; • Schuhe (paarweise gebündelt)&#10; • Trachten</string>
+    <string name="donts_list_altkleider_und_schuhe">
+         • Abfälle oder sonstigen Dinge&#10; • Beschädigtes und schmutziges Material</string>
+
+
+    <!-- List Bauschutt (Reichart) -->
+
+    <string name="dos_list_bauschutt_asbestzement">
+        Blumenkästen und Pflanzenschalen; flache Fassadenplatten; Wellasbestplatten von Dächern und Außenfassaden</string>
+    <string name="donts_list_bauschutt_asbestzement">
+        Mengen über 1 m³ pro Halbjahr (Bauschuttdeponie); Nachtspeicheröfen (Abgabe bei Firma Greiter nach vorheriger Rücksprache); schwachgebundenes Asbest (Entsorgung über Fachfirmen); unverpackte asbesthaltige Materialien
+        </string>
+
+
+    <!-- List Biomüll (Reichart) -->
+
+    <string name="dos_list_biomuell">
+         •	Essensreste und überlagerte Lebensmittel (z.B. Nudeln, Obst, Gemüse oder Fleisch)
+•	Kaffeesatz
+•	Rasen-, Baum- und Strauchschnitt, Laub
+•	Schalen von Früchten, Nüssen und Eiern
+•	Schnitt- und Balkonblumen
+•	Teebeute
+</string>
+    <string name="donts_list_biomuell">
+         •	Asche
+•	Binden und Windeln
+•	Kehricht
+•	Kleintierstreu und Tierkadaver
+•	Papiertaschentücher
+•	Plastiktüten (außer vom ZAK zugelassene EcoVio-Beutel)
+•	Staubsaugerbeutel
+•	Verpackte Lebensmittel</string>
+
+
 </resources>
