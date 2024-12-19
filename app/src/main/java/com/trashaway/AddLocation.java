@@ -120,7 +120,8 @@ public class AddLocation extends AppCompatActivity {
                 resultIntent.putExtra("icon", iconChoice);
                 setResult(Activity.RESULT_OK, resultIntent);
 
-                sendDataToServer(name,currentLatitude,currentLongitude,iconChoice);
+                // not working
+                //sendDataToServer(name,currentLatitude,currentLongitude,iconChoice);
 
                 finish();
             }

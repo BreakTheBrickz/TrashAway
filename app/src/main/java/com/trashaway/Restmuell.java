@@ -10,13 +10,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Altkleider extends AppCompatActivity {
+public class Restmuell extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_altkleider);
+        setContentView(R.layout.activity_restmuell);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -25,7 +25,10 @@ public class Altkleider extends AppCompatActivity {
     }
 
     public void backPressed(View view){
-        Intent i = new Intent(Altkleider.this, TrashABC_Overview.class);
+
+        Intent i = new Intent(Restmuell.this, TrashABC_Overview.class);
         startActivity(i);
+
+
     }
 }

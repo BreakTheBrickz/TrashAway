@@ -42,7 +42,7 @@ public class MainMenu extends AppCompatActivity {
                 }
                 else if (item.getItemId() == R.id.trash_abc) {
                     //Toast.makeText(MainMenu.this, "Trash ABC Selected", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(MainMenu.this, TrashABC.class);
+                    Intent i = new Intent(MainMenu.this, TrashABC_Overview.class);
                     startActivity(i);
                 }
                 else if (item.getItemId() == R.id.login) {
